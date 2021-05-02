@@ -8,7 +8,8 @@
     группа 1.1
 
     Инвариантная самостоятельная работа 
-    Задание 2.1: Разработать прототип программы «Калькулятор», позволяющую выполнять базовые арифметические действия и функцию обертку, сохраняющую название выполняемой операции, аргументы и результат в файл.
+    Задание 2.1: Разработать прототип программы «Калькулятор», позволяющую выполнять 
+    базовые арифметические действия и функцию обертку, сохраняющую название выполняемой операции, аргументы и результат в файл.
 """
 
 def is_digit(string):
@@ -70,7 +71,7 @@ def decor(f):
 
 decor(culc)
 ```
-### [2.2 Дополнение программы «Калькулятор» декоратором, сохраняющий действия, которые выполняются в файл-журнал.](https://repl.it/@PolinaLazebniko/Tema6-ISR-Zad32)
+### [2.2 Дополнение программы «Калькулятор» декоратором, сохраняющий действия, которые выполняются в файл-журнал.](https://replit.com/@PolinaLazebniko/sem4-Tema2-ISR-22#main.py)
 ```python
 """
     Лазебникова Полина 
@@ -78,42 +79,72 @@ decor(culc)
     группа 1.1
 
     Инвариантная самостоятельная работа 
-    Задание 3.2: Разработка сценария с реализацией операции поиска подстроки в тексте.
+    Задание 2.2: Дополнение программы «Калькулятор» декоратором, сохраняющий действия, которые выполняются в файл-журнал.
 """
 
-def search_all_str(input_str_f, searchable_str_f): 
-    """
-    Функция для поиска подстроки 
+def decor(f):
+    def second(*args, **kwargs):
+        journal = open("journal.txt", "a")
+        operator, result = f(*args)
+        journal.write("Операция: ")
+        journal.write(operator)
+        journal.write(", результат: ")
+        journal.write(result)
+        journal.write("\n")
+        return f(*args, **kwargs)
+    return second
 
-    Входные данные - строка для поиска, строка, по которой идет поиск
-
-    Сначала ищет первое вхождение подстроки, и далее последующие, если вхождений нет,
-    то выводит сообщение об этом
-    """
-    rec = searchable_str_f.find(input_str_f)
-    if rec != -1:
-        print('Первое вхождение подстроки: ', rec)
+def is_digit(string):
+    if string.isdigit():
+       return int(string)
     else:
-        print('Нет вхождений подстроки')
-    while rec != -1:
-        rec = searchable_str_f.find(input_str_f, rec + len(input_str_f), len(searchable_str_f))
-        if rec != -1:
-            print('Вхождение подстроки: ', rec)
+        try:
+            float(string)
+            return float(string)
+        except ValueError:
+            return False
+
+@decor
+def culc(strForCulc):
+    outp = strForCulc
+    str2 = list(strForCulc)
+    operators ={
+        '+': (lambda x, y: x + y),
+        '-': (lambda x, y: x - y),
+        '*': (lambda x, y: x * y),
+        '/': (lambda x, y: x / y),
+        '^': (lambda x, y: x ** y)
+    }
+    operators2 = {
+        '+': 'addition',
+        '-': 'subtraction',
+        '*': 'multiplication',
+        '/': 'division',
+        '^': 'exponentiation'
+    }
+    operator = ''
+    num = ''
+    for i in str2:
+        if i in '0123456789.' and operator == '':
+            num += i
+        elif operator == '':
+            x = int(num)
+            if i in operators:
+                operator = i
+            num = ''
         else:
-            print('Больше нет вхождений')
+            num += i
+    y = int(num)
+    outp += ' = '
+    lr = (operators.get(operator)(x, y))
+    outp += str(lr)
+    #outp2 = outp + ' = ' + str(lr)
+    res2 = operators2.get(operator)
+    return [res2, outp]
 
-def main():
-    """
-    Функция, которая принимает от пользователя строку для поиска и строку, по которой идет поиск и 
-    вызывает функцию search_all_str  
-    """
-    input_str = input("Введите строку для поиска: ")
-    searchable_str = input("Введите строку, по которой идет поиск: ")    
-    search_all_str(input_str, searchable_str)
-
-main()
+culc('765*100')
 ```
-### [2.3 Рефакторинг (модификация) программы с декоратором модулем functools и использование его функционала](https://repl.it/@PolinaLazebniko/Tema6-ISR-Zad33)
+### [2.3 Рефакторинг (модификация) программы с декоратором модулем functools и использование его функционала](https://replit.com/@PolinaLazebniko/sem4-Tema2-ISR-23#main.py)
 ```python
 """
     Лазебникова Полина 
@@ -121,32 +152,70 @@ main()
     группа 1.1
 
     Инвариантная самостоятельная работа 
-    Задание 3.3: Создание скрипта для считывания данных справочных логов из текстового 
-    файла и преобразования их в CSV-формат с последующей записью в новый файл.
+    Задание 2.3: Рефакторинг (модификация) программы с декоратором модулем functools и использование его функционала.
 """
+import functools
 
-import json
-import csv
+def decor(f):
+    @functools.wraps(f)
+    def second(*args, **kwargs):
+        journal = open("journal.txt", "a")
+        operator, result = f(*args)
+        journal.write("Операция: ")
+        journal.write(operator)
+        journal.write(", результат: ")
+        journal.write(result)
+        journal.write("\n")
+        # return f(*args, **kwargs)
+    return second
 
-def json_f():
-    """
-    Функция для работы с json
-    """
-    handle = open('MOCK_DATA.json')
-    lines = json.load(handle)
-    return lines
+def is_digit(string):
+    if string.isdigit():
+       return int(string)
+    else:
+        try:
+            float(string)
+            return float(string)
+        except ValueError:
+            return False
 
-def csv_f(lines):
-    """
-    Функция для работы с csv
-    """
-    with open('eggs.csv', 'w', newline='') as csvfile:
-        csv_writer = csv.writer(
-            csvfile, delimiter=';', quotechar='"',
-            quoting=csv.QUOTE_MINIMAL)
-        csv_writer.writerow(list(lines[0].keys()))
-        for line in lines:
-            csv_writer.writerow(list(line.values()))
+@decor
+def culc(strForCulc):
+    outp = strForCulc
+    str2 = list(strForCulc)
+    operators ={
+        '+': (lambda x, y: x + y),
+        '-': (lambda x, y: x - y),
+        '*': (lambda x, y: x * y),
+        '/': (lambda x, y: x / y),
+        '^': (lambda x, y: x ** y)
+    }
+    operators2 = {
+        '+': 'addition',
+        '-': 'subtraction',
+        '*': 'multiplication',
+        '/': 'division',
+        '^': 'exponentiation'
+    }
+    operator = ''
+    num = ''
+    for i in str2:
+        if i in '0123456789.' and operator == '':
+            num += i
+        elif operator == '':
+            x = int(num)
+            if i in operators:
+                operator = i
+            num = ''
+        else:
+            num += i
+    y = int(num)
+    outp += ' = '
+    lr = (operators.get(operator)(x, y))
+    outp += str(lr)
+    #outp2 = outp + ' = ' + str(lr)
+    res2 = operators2.get(operator)
+    return [res2, outp]
 
-csv_f(json_f())
+culc('123*505')
 ```
