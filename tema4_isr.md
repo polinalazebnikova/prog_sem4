@@ -8,52 +8,33 @@
     группа 1.1
 
     Инвариантная самостоятельная работа 
-    Задание 1.1: Разработка программы с реализацией функции для считывания json-данных из файла 
-    и вывод их в табличном виде на экран. Реализовать базовый синтаксис для обработки исключений (try .. except).
+    Задание 4.1: Создание программы по заполнению массивов случайными значениями. Сортировка значений в списке методом вставки, плавной сортировки, с помощью встроенных функций языка.
 """
+import random 
 
-def json_read(name_file):
-    """
-    Функция для работы с файлом json
-    Функция формирует строки таблицы из файла, при этом обрабатывая возможные исключения 
-    """  
-    try:
-        file_open = open(name_file)
-        try:
-            import json
-        except ImportError as e:
-            import json
-            print('Problem with import json')
-        data = json.load(file_open)  
-        t = []
-        title = '| {:^3}| {:^10}| {:^13}| {:^30}| {:^6}| {:^15}|'.format('ID','First name','Last name','Email','Gender','IP-address')
-        delimiter = '-'*len(title)
-        val = '| {id:<3}| {first_name:10}| {last_name:13}| {email:30}| {gender:6}| {ip_address:15}|'
-        t.append(delimiter)  
-        t.append(title)
-        t.append(delimiter)  
-        for i in range(len(data)):
-            tmp = data[i]
-            res = val.format(**tmp)
-            t.append(res)
-            t.append(delimiter)
-        return t
-    except FileNotFoundError as e:
-        print('File not found')  
-    except IOError as e:
-        print('Problem with input or output')
-    except NameError as e:
-        print('Name not found')
+massiv=[] 
+for i in range(10): 
+    massiv.append(random.randint(-100, 100)) 
+print("Массив\n", massiv)
 
-def main():
+def insertionSort(mas = []):
     """
-    Функция, которая вызывает функцию json_read, в качестве аргумента используя файл json, и выводит результат
+    Метод вставки
     """
-    file_name = json_read('MOCK_DATA.json')
-    for i in file_name:
-        print(i)
+    n = len(mas)
+    for i in range(1, n):
+        elChange = mas[i]
+        k = i - 1
+        while ((k >= 0)&(mas[k] > elChange)):
+            mas[k + 1] = mas[k]
+            k -= 1
+        mas[k + 1] = elChange
+    return mas
 
-main()
+print("Сортировка методом вставки\n", insertionSort(massiv))
+
+mas_sort = sorted(massiv)
+print("Сортировка с помощью встроенных функций языка\n", mas_sort)
 ```
 ### [4.2 Создание программы по распределению списка с случайными значениями на два списка по определенному критерию (четность/нечетность, положительные/отрицательные числа).](https://replit.com/@PolinaLazebniko/sem4-Tema4-ISR-42#main.py)
 ```python
