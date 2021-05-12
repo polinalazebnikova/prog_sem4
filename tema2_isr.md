@@ -55,7 +55,6 @@ def culc(strForCulc):
     outp += ' = '
     lr = (operators.get(operator)(x, y))
     outp += str(lr)
-    #outp2 = outp + ' = ' + str(lr)
     res2 = operators2.get(operator)
     return [res2, outp]
 
@@ -91,7 +90,6 @@ def decor(f):
         journal.write(", результат: ")
         journal.write(result)
         journal.write("\n")
-        return f(*args, **kwargs)
     return second
 
 def is_digit(string):
@@ -138,7 +136,6 @@ def culc(strForCulc):
     outp += ' = '
     lr = (operators.get(operator)(x, y))
     outp += str(lr)
-    #outp2 = outp + ' = ' + str(lr)
     res2 = operators2.get(operator)
     return [res2, outp]
 
@@ -166,7 +163,6 @@ def decor(f):
         journal.write(", результат: ")
         journal.write(result)
         journal.write("\n")
-        # return f(*args, **kwargs)
     return second
 
 def is_digit(string):
@@ -213,7 +209,6 @@ def culc(strForCulc):
     outp += ' = '
     lr = (operators.get(operator)(x, y))
     outp += str(lr)
-    #outp2 = outp + ' = ' + str(lr)
     res2 = operators2.get(operator)
     return [res2, outp]
 
