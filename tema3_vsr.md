@@ -98,7 +98,7 @@ def new_client(new_reg):
 new_client_reg = New_client('Nick', 'Zhukov', 'zh@mail.ru', '11.02.99', '660012', 'Moskow', 'Из рекламы в вк')
 new_client(new_client_reg)
 ```
-### [3.4 Разработка скрипта для получения и сохранения данных социальных сетей Twitter или Instagram.](https://replit.com/@PolinaLazebniko/sem4-Tema3-VSR-31#main.py)
+### [3.4 Разработка скрипта для получения и сохранения данных социальных сетей Twitter или Instagram.](https://replit.com/@PolinaLazebniko/sem4-Tema3-VSR-34-1#main.py)
 ```python
 
 ```
