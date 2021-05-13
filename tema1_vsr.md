@@ -11,8 +11,15 @@
     Задание 1.1: Создание программы для считывания данных формата CSV с использованием функционала модуля contextlib
 """
 import csv
+from contextlib import contextmanager
 
-with open('file.csv') as csv_file:
+@contextmanager
+def open_file(path, mode):
+    f = open(path, mode)
+    yield f
+    f.close()
+
+with open_file('file.csv', 'r') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     for row in csv_reader:
         print(row)
