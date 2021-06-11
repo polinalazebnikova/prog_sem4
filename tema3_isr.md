@@ -15,28 +15,28 @@ class Post():
     """
     Cоздание поста
     """
-    def __init__(self, post_id, text):
-        self.id = post_id
+    def __init__(self, user_id, text):
+        self.id = user_id
         self.text = text
 
     def __str__(self):
-      return f"Author:{self.id}\n Text:{self.text}" 
+      return f"Author: {self.id}\n Text: {self.text}" 
 
 class Comment(Post): # Наследует класс Post 
     """
     Создание комментария под постом
     """
-    def __init__(self, post_id, reply_to, text):
-        Post.__init__(self, post_id, text)
+    def __init__(self, user_id, reply_to, text):
+        Post.__init__(self, user_id, text)
         self.text = text
         self.reply_to = reply_to
 
     def __str__(self):
-      return f"Author:{self.id}\n Reply to:{self.reply_to}\n Comment:{self.text}" 
+      return f"Author: {self.id}\n Reply to: {self.reply_to}\n Comment: {self.text}" 
 
-post = Post(post_id='pau', text='Hello!')
+post = Post(user_id='pau', text='Hello!')
 print('Post:\n\n', post)
-comment = Comment(post_id='wooya', reply_to='pau', text='Hi!')
+comment = Comment(user_id='wooya', reply_to='pau', text='Hi!')
 print('\nComment:\n\n', comment)
 ```
 ### [3.2. Создание геттеров и сеттеров для классов «запись», «комментарий» приложения «Гостевая книга». Создание функций для вывода на печать информации, хранящийся в объектах.](https://replit.com/@PolinaLazebniko/sem4-Tema1-ISR-12#main.py)
